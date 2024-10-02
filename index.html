@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterTrack - Monitoramento de Consumo de Água</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f8ff;
+            color: #333;
+        }
+
+        header {
+            background: #00bfff;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        main {
+            margin-top: 60px; /* space for fixed header */
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        form {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #00bfff;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: #00aaff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #00bfff;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WaterTrack</h1>
+        <p>Monitore seu consumo de água e mantenha-se saudável!</p>
+    </header>
+    
+    <main>
+        <section class="container">
+            <h2>Registre seu Consumo de Água</h2>
+            <form id="water-form">
+                <label for="amount">Quantidade (em ml):</label>
+                <input type="number" id="amount" required>
+                <button type="submit">Adicionar</button>
+            </form>
+            <h3>Histórico de Consumo</h3>
+            <ul id="history">
+                <!-- Histórico de consumo será adicionado aqui -->
+            </ul>
+            <div class="summary">
+                <h3>Total Consumido:</h3>
+                <p id="total-amount">0 ml</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 WaterTrack. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('water-form');
+        const amountInput = document.getElementById('amount');
+        const historyList = document.getElementById('history');
+        const totalAmountElem = document.getElementById('total-amount');
+
+        let totalAmount = 0;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const amount = parseInt(amountInput.value, 10);
+
+            if (!isNaN(amount) && amount > 0) {
+                // Adiciona ao histórico
+                const li = document.createElement('li');
+                li.textContent = `${amount} ml`;
+                historyList.appendChild(li);
+
+                // Atualiza o total
+                totalAmount += amount;
+                totalAmountElem.textContent = `${totalAmount} ml`;
+
+                // Limpa o campo de input
+                amountInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
